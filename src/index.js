@@ -1,18 +1,10 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 
-import Counter from './Counter';
+import Application from './Application';
 
-import './styles.scss';
+import './styles.css';
 
-const Application = () => {
-  return (
-    <main className="Application">
-      <section className="Counters">
-        <Counter />
-      </section>
-    </main>
-  );
-};
+const rootElement = document.getElementById('root');
 
-render(<Application />, document.getElementById('root'));
+ReactDOM.render(<Application />, rootElement);
