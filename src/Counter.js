@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function getStateFromLocalStorage(){
+/* function getStateFromLocalStorage(){
   var storage = localStorage.getItem('counterState');
   console.log('Storage', storage);
 
@@ -12,15 +12,31 @@ function getStateFromLocalStorage(){
   if(typeof storage == 'string'){
     return JSON.parse(storage);
   }
-}
+} */
 
 function setStateInLocalStorage(value){
   localStorage.setItem("counterState", value);
 }
 
+const useLocalStorage = (initialState, key) => {
+  const get = () => {
+    const storage = localStorage.getItem(key);
+   
+    if(storage) return JSON.parse(storage)["value"];
+    return initialState;
+  }
+
+  const [value, setValue] = useState(get());
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify({value}));
+  },[value]);
+
+  return [value, setValue];
+}
 
 const Counter = () => { 
-  const [count, setCount] = useState(getStateFromLocalStorage());
+  const [count, setCount] = useLocalStorage(0, 'storage');
 
   const increment = () => setCount(() =>{
     if(count >= 5) return 5;
