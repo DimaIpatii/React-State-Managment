@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import {GrudgeContext} from './GrudgeProvider';
 
-const NewGrudge = ({ onSubmit }) => {
+const NewGrudge = React.memo(() => {
+  const {addGrudge} = React.useContext(GrudgeContext);
+  
   const [person, setPerson] = useState('');
   const [reason, setReason] = useState('');
 
   const handleChange = event => {
     event.preventDefault();
-    onSubmit({ person, reason });
+    addGrudge({ person, reason });
   };
-
+  
   return (
     <form className="NewGrudge" onSubmit={handleChange}>
       <input
@@ -28,6 +31,6 @@ const NewGrudge = ({ onSubmit }) => {
       <input className="NewGrudge-submit button" type="submit" />
     </form>
   );
-};
+});
 
 export default NewGrudge;
